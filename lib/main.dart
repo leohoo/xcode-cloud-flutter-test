@@ -49,6 +49,11 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  void _resetCounter() {
+    setState(() {
+      _counter = 0;
+    });
+  }
 
   void _incrementCounter() {
     setState(() {
@@ -71,10 +76,15 @@ class _MyHomePageState extends State<MyHomePage> {
     // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
+          // Here we take the value from the MyHomePage object that was created by
+          // the App.build method, and use it to set our appbar title.
+          title: Text(widget.title),
+          flexibleSpace: InkWell(
+            onTap: () {
+              // reset counter
+              _resetCounter();
+            },
+          )),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
