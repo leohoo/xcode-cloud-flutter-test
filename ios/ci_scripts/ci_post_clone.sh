@@ -22,4 +22,4 @@ cd ios && pod install # run `pod install` in the `ios` directory.
 
 flutter build ios --build-name=$APPVER
 
-exit 0
+#exit 0
