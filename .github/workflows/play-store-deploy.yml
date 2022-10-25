@@ -1,5 +1,12 @@
 name: Deploy to Play Store
 on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'lib/**'
+      - 'android/**'
+
   # Enable manual run
   workflow_dispatch:
     inputs:
