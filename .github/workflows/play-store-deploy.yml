@@ -72,8 +72,8 @@ jobs:
           options: -v ${{ github.workspace }}:/work
           run: |
             echo "hello from docker"
-            cd /work
-            ls -l
+            cd /work/android
+            bundle exec fastlane internal
 
       # - run: bundle exec fastlane ${{ github.event.inputs.lane || 'internal' }}
       #   working-directory: android
