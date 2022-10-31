@@ -7,6 +7,10 @@ on:
       - 'lib/**'
       - 'android/**'
 
+  pull_request:
+    branches:
+      - master
+
   # Enable manual run
   workflow_dispatch:
     inputs:
@@ -41,12 +45,12 @@ jobs:
       - run: flutter pub get
 
       # Setup Ruby, Bundler, and Gemfile dependencies
-      - name: Setup Fastlane
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: "2.6"
-          bundler-cache: true
-          working-directory: android
+      # - name: Setup Fastlane
+      #   uses: ruby/setup-ruby@v1
+      #   with:
+      #     ruby-version: "2.6"
+      #     bundler-cache: true
+      #     working-directory: android
 
       - name: Configure Keystore
         run: |
@@ -61,5 +65,15 @@ jobs:
 
       # Build and deploy with Fastlane (by default, to internal track) 🚀.
       - run: flutter build appbundle --build-number=${{ github.run_number }}
-      - run: bundle exec fastlane ${{ github.event.inputs.lane || 'internal' }}
-        working-directory: android
+
+      - uses: addnab/docker-run-action@v3
+        with:
+          image: fastlanetools/fastlane:latest
+          options: -v ${{ github.workspace }}:/work
+          run: |
+            echo "hello from docker"
+            cd /work
+            ls -l
+
+      # - run: bundle exec fastlane ${{ github.event.inputs.lane || 'internal' }}
+      #   working-directory: android
