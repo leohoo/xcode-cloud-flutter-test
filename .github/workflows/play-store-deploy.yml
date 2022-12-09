@@ -53,6 +53,7 @@ jobs:
         with:
           ruby-version: "2.6"
           bundler-cache: true
+          working-directory: .
 
       - name: Configure Keystore
         run: |
