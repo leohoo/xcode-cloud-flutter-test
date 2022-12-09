@@ -27,6 +27,11 @@ permissions: read-all
 jobs:
   fastlane-deploy:
     runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: android
+
     steps:
       # Set up Flutter.
       - name: Clone Flutter repository with master channel
@@ -46,7 +51,6 @@ jobs:
         with:
           ruby-version: "2.6"
           bundler-cache: true
-          working-directory: android
 
       - name: Configure Keystore
         run: |
@@ -57,9 +61,7 @@ jobs:
           PLAY_STORE_UPLOAD_KEY: ${{ secrets.PLAY_STORE_UPLOAD_KEY }}
           KEY_PROPERTIES: ${{ secrets.KEY_PROPERTIES }}
           PLAY_STORE_CONFIG_JSON: ${{ secrets.PLAY_STORE_CONFIG_JSON }}
-        working-directory: android
 
       # Build and deploy with Fastlane (by default, to internal track) 🚀.
       - run: flutter build appbundle --build-number=${{ github.run_number }}
       - run: bundle exec fastlane ${{ github.event.inputs.lane || 'internal' }}
-        working-directory: android
