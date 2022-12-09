@@ -39,10 +39,12 @@ jobs:
         with:
           channel: master
       - run: flutter doctor -v
+        working-directory: .
 
       # Checkout code and get packages.
       - name: Checkout gallery code
         uses: actions/checkout@v3
+
       - run: flutter pub get
 
       # Setup Ruby, Bundler, and Gemfile dependencies
